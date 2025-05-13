@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>NextGen Patient Portal</title>
+<style>
+    body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    background-image: url('picture.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center;
+    }
+    header {
+        background: #d099d9;
+        color: white;
+        padding: 15px 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    .header-left {
+        font-size: 1.5em;
+        font-weight: bold;
+    }
+    .header-right {
+        display: flex;
+        gap: 15px;
+    }
+    .header-right a {
+        color: white;
+        text-decoration: none;
+        font-size: 1em;
+    }
+    .login-container, .side-menu {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 80vh;
+    }
+    .login-box {
+        background: white;
+        padding: 30px;
+        box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        border-radius: 8px;
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+        min-width: 300px;
+    }
+    .login-box input {
+        padding: 10px;
+        font-size: 1em;
+    }
+    .login-box a {
+        font-size: 0.9em;
+        text-align: center;
+        color: #d099d9;
+        text-decoration: none;
+    }
+    .side-menu {
+        display: none;
+        flex-direction: column;
+        gap: 10px;
+    }
+    .side-menu.active {
+        display: flex;
+    }
+    .side-menu button {
+        padding: 10px 20px;
+        font-size: 1em;
+        border: none;
+        background: #d099d9;
+        color: white;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+    footer {
+        text-align: center;
+        padding: 10px;
+        background: #d099d9;
+    }
+
+    /* Modal for appointment booking */
+    #appointmentModal {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5);
+        justify-content: center;
+        align-items: center;
+    }
+    .modal-content {
+        background: white;
+        padding: 30px;
+        border-radius: 8px;
+        width: 400px;
+        display: flex;
+        flex-direction: column;
+        gap: 15px;
+    }
+    .modal-content input, .modal-content textarea, .modal-content button {
+        padding: 10px;
+        font-size: 1em;
+    }
+    .close-btn {
+        background: #d099d9;
+        color: white;
+        cursor: pointer;
+        border: none;
+        border-radius: 5px;
+    }
+
+    /* Welcome message styling (Positioned on the left of the menu) */
+    .welcome-message {
+        font-size: 1.5em;
+        color: #fff;
+        margin-right: 20px;
+        display: none; /* Hidden by default */
+    }
+html, body {
+    height: 100%;
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+main {
+    flex: 1;
+}
+</style>
+</head>
+<body>
+<header>
+    <div class="header-left">NextGen Patient Portal</div>
+    <div class="header-right">
+        <div id="welcomeMessage" class="welcome-message">
+            Welcome Mr. Sick
+        </div>
+        <a href="#">Book an appointment</a>
+        <a href="#">Sign In</a>
+    </div>
+</header>
+<main>
+    <div class="login-container" id="loginView">
+        <div class="login-box">
+            <input placeholder="Email address" required="" type="email"/>
+            <input placeholder="Password" required="" type="password"/>
+            <button id="signInBtn" style="padding: 10px; background: #d099d9; color: white; border: none; border-radius: 5px; cursor: pointer;">Sign In</button>
+            <a href="#">Create an account</a>
+            <a href="#">Forgot password?</a>
+        </div>
+    </div>
+
+    <aside class="side-menu" id="dashboardView">
+        <button id="backBtn">← Back to Login</button>
+        <button>Main Menu</button>
+        <button>Request Medication Refill</button>
+        <button id="bookAppointmentBtn">Book an Appointment</button>
+        <button>Send a Message</button>
+        <button>Log out</button>
+    </aside>
+</main>
+
+<!-- Modal for booking an appointment -->
+<div id="appointmentModal">
+    <div class="modal-content">
+        <h2>Book an Appointment</h2>
+        <label for="doctor">Primary Care Doctor: Dr. Heal</label>
+        <input type="date" id="appointmentDate" required />
+        <input type="time" id="appointmentTime" required />
+        <textarea id="appointmentNote" placeholder="Write a note about how you're feeling..." required></textarea>
+        <button id="confirmAppointment" style="background: #d099d9; color: white;">Confirm Appointment</button>
+        <button class="close-btn" id="closeModal">Close</button>
+    </div>
+</div>
+
+
+
+<footer>
+    <small>© 2025 NextGen. All rights reserved.</small>
+</footer>
+
+<script>
+    const signInBtn = document.getElementById("signInBtn");
+    const backBtn = document.getElementById("backBtn");
+    const loginView = document.getElementById("loginView");
+    const dashboardView = document.getElementById("dashboardView");
+
+    const bookAppointmentBtn = document.getElementById("bookAppointmentBtn");
+    const appointmentModal = document.getElementById("appointmentModal");
+    const closeModal = document.getElementById("closeModal");
+    const confirmAppointment = document.getElementById("confirmAppointment");
+    const welcomeMessage = document.getElementById("welcomeMessage");
+
+    signInBtn.addEventListener("click", function(e) {
+        e.preventDefault();
+        // Hide login view and show dashboard view
+        loginView.style.display = "none";
+        dashboardView.classList.add("active");
+
+        // Display the welcome message
+        welcomeMessage.style.display = "block";
+    });
+
+    backBtn.addEventListener("click", function() {
+        dashboardView.classList.remove("active");
+        loginView.style.display = "flex";
+        welcomeMessage.style.display = "none"; // Hide welcome message on logout
+    });
+
+    // Open Appointment Modal
+    bookAppointmentBtn.addEventListener("click", function() {
+        appointmentModal.style.display = "flex";
+    });
+
+    // Close the Appointment Modal
+    closeModal.addEventListener("click", function() {
+        appointmentModal.style.display = "none";
+    });
+
+    // Confirm the Appointment and close modal
+    confirmAppointment.addEventListener("click", function() {
+        const date = document.getElementById("appointmentDate").value;
+        const time = document.getElementById("appointmentTime").value;
+        const note = document.getElementById("appointmentNote").value;
+
+        if (date && time && note) {
+            alert("Appointment confirmed for " + date + " at " + time + "\nNote: " + note);
+            appointmentModal.style.display = "none";
+        } else {
+            alert("Please fill in all the fields.");
+        }
+    });
+</script>
+
+</body>
+</html>
+
