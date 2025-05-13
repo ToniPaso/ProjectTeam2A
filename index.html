@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>NextGen Patient Portal</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header>
+    <div class="header-left">NextGen Patient Portal</div>
+    <div class="header-right">
+        <div id="welcomeMessage" class="welcome-message">
+            Welcome Mr. Sick
+        </div>
+        <a href="#">Book an appointment</a>
+        <a href="#">Sign In</a>
+    </div>
+</header>
+<main>
+    <div class="login-container" id="loginView">
+        <div class="login-box">
+            <input placeholder="Email address" required="" type="email"/>
+            <input placeholder="Password" required="" type="password"/>
+            <button id="signInBtn" style="padding: 10px; background: #d099d9; color: white; border: none; border-radius: 5px; cursor: pointer;">Sign In</button>
+            <a href="#">Create an account</a>
+            <a href="#">Forgot password?</a>
+        </div>
+    </div>
+
+    <aside class="side-menu" id="dashboardView">
+        <button id="backBtn">← Back to Login</button>
+        <button>Main Menu</button>
+        <button>Request Medication Refill</button>
+        <button id="bookAppointmentBtn">Book an Appointment</button>
+        <button>Send a Message</button>
+        <button>Log out</button>
+    </aside>
+</main>
+
+<!-- Modal for booking an appointment -->
+<div id="appointmentModal">
+    <div class="modal-content">
+        <h2>Book an Appointment</h2>
+        <label for="doctor">Primary Care Doctor: Dr. Heal</label>
+        <input type="date" id="appointmentDate" required />
+        <input type="time" id="appointmentTime" required />
+        <textarea id="appointmentNote" placeholder="Write a note about how you're feeling..." required></textarea>
+        <button id="confirmAppointment" style="background: #d099d9; color: white;">Confirm Appointment</button>
+        <button class="close-btn" id="closeModal">Close</button>
+    </div>
+</div>
+
+
+<footer>
+    <small>© 2025 NextGen. All rights reserved.</small>
+</footer>
+
+<script src="script.js"></script>
+
+</body>
+</html>
+
